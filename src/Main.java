@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Objects;
 import java.util.Scanner;
 
 public class Main {
@@ -18,7 +19,7 @@ public class Main {
                             deleteType(scanner);
                             break;
                         case 3:
-                            // todo: обрабатываем пункт меню 3
+                            getTasDay(scanner);
                             break;
                         case 0:
                             break label;
@@ -32,50 +33,60 @@ public class Main {
     }
     static DailyPlanner dailyPlanner = new DailyPlanner();
     static ArrayList<Integer> keysContains = new ArrayList<>();
+    static Notes notes = new Notes();
     private static void inputTask(Scanner scanner) {
         System.out.print("Введите название задачи: ");
         String taskName = scanner.next();
-        Notes notes = new Notes(taskName);
+        notes.setHeading(taskName);
         dailyPlanner.setNotesContain(notes.getId(), notes);
         keysContains.add(notes.getId());
-        inputDdescriptions(scanner, notes);
+        inputDdescriptions(scanner);
+
         // todo
     }
 
-    private static void inputDdescriptions(Scanner scanner, Notes notes) {
+    private static void inputDdescriptions(Scanner scanner) {
         System.out.print("Введите описание задачи: ");
         String descriptionsName = scanner.next();
         dailyPlanner.notesContain.get(notes.getId()).setDescription(descriptionsName);
-        inputType(scanner, notes);
+        inputType(scanner);
     }
 
-    private static void inputType(Scanner scanner, Notes notes) {
-        System.out.print("Выберите тип задачи" + "\n"
-                +  "1 - личная" + "\n" + "2 - деловая" + "\n");
+    private static void inputType(Scanner scanner) {
+        System.out.print("""
+                Выберите тип задачи
+                1 - личная
+                2 - деловая
+                """);
         String tupeName = scanner.next();
-        if (tupeName == "1") {
+        if (tupeName.equals("1")) {
             dailyPlanner.notesContain.get(notes.getId()).setTaskType(true);
         } else {
             dailyPlanner.notesContain.get(notes.getId()).setTaskType(false);
         }
-        choiceRepeatability(scanner, notes);
+        choiceRepeatability(scanner);
     }
 
-    private static void choiceRepeatability(Scanner scanner, Notes notes) {
+    private static void choiceRepeatability(Scanner scanner) {
         System.out.println("Хотите указать повторяемость ?" + "\n"
         + "1 - да" + "\n" + "2 - нет");
         String repeatabilityName = scanner.next();
-        if (repeatabilityName == "1") {
-            inputRepeatability(scanner, notes);
+        if (repeatabilityName.equals("1")) {
+            inputRepeatability(scanner);
         }
     }
 
-    private static void inputRepeatability(Scanner scanner, Notes notes) {
-        System.out.println("С какой переодичностью  вы хотите получать напоминание?" + "\n"
-        + "1 - однократно" + "\n" + "2 - ежедневно" + "\n" +  "3 - еженедельно" + "\n" +
-                "4 - ежемесячно" + "\n" + "5 - ежегодно");
+    private static void inputRepeatability(Scanner scanner) {
+        System.out.print("""
+         С какой переодичностью  вы хотите получать напоминание?
+         1 - однократно
+         2 - ежедневно
+         3 - еженедельно
+         4 - ежемесячно
+         5 - ежегодно
+                """);
         String repeatabilityName = scanner.next();
-        dailyPlanner.notesContain.get(notes.getId()).nextNNote(repeatabilityName);
+        dailyPlanner.notesContain.get(notes.getId()).nextNNote(repeatabilityName, notes.getId());
     }
 
     private static void deleteType(Scanner scanner) {
@@ -89,6 +100,15 @@ public class Main {
         String deleteName = scanner.next();
         int deleteNames = Integer.parseInt(deleteName);
         dailyPlanner.notesContain.remove(keysContains.get(deleteNames));
+    }
+
+    private static void getTasDay(Scanner scanner) {
+        System.out.println("Укажите дату для получения заметки");
+        System.out.println(dailyPlanner.notesContain.get(notes.getDate()));
+        dailyPlanner.notesContain.get(notes.getDate());
+        String tasDayName = scanner.next();
+        System.out.println(tasDayName);
+
     }
 
     private static void printMenu() {

@@ -1,5 +1,5 @@
 public interface Repeatability {
 
-    void nextNNote(String string);
+    void nextNNote(String string, Integer id);
 
 }

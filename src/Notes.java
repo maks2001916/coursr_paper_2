@@ -1,5 +1,7 @@
+import java.util.ArrayList;
 import java.util.Objects;
 import java.util.Random;
+import java.util.Scanner;
 
 public class Notes implements Repeatability {
     private String heading;
@@ -11,13 +13,20 @@ public class Notes implements Repeatability {
     String LocalDateTime = new String();
     String LocalDate = new String();
     Random random;
-    public Notes(String heading) {
-        this.heading = heading;
+    public Notes() {
         this.date = LocalDate;
         random = new Random();
         id = random.nextInt(10000);
         this.time = LocalDateTime;
 
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public String getTime() {
+        return time;
     }
 
     public String getHeading() {
@@ -54,8 +63,15 @@ public class Notes implements Repeatability {
         this.description = description;
     }
 
+    public void inputTasks(Scanner scanner,Notes notes, DailyPlanner dailyPlanner,
+                                  ArrayList<Integer> keysContains) {
+        System.out.print("Введите название задачи: ");
+        dailyPlanner.setNotesContain(notes.getId(), notes);
+        keysContains.add(notes.getId());
+    }
+
     @Override
-    public void nextNNote(String string) {
+    public void nextNNote(String string, Integer id) {
         switch (string) {
             case "1":
                 repeatStatusOne();
@@ -63,15 +79,17 @@ public class Notes implements Repeatability {
         }
     }
 
-    public static void repeatStatusOne() {
+    public static boolean repeatStatusOne() {
         boolean u = true;
         if (u == true) {
-
+            return u;
+        } else {
+            u = false;
         }
-        u = false;
+        return u;
     }
 
-    public void gettingTaskSpecifiedDay() {
+    public void getTaskSpecifiedDay() {
 
     }
 
