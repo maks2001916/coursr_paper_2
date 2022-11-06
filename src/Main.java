@@ -37,16 +37,27 @@ public class Main {
     private static void inputTask(Scanner scanner) {
         System.out.print("Введите название задачи: ");
         String taskName = scanner.next();
-        notes.setHeading(taskName);
-        dailyPlanner.setNotesContain(notes.getId(), notes);
-        keysContains.add(notes.getId());
+        if (taskName != null || !taskName.isEmpty() || !taskName.isBlank()) {
+            notes.setHeading(taskName);
+            dailyPlanner.setNotesContain(notes.getId(), notes);
+            keysContains.add(notes.getId());
+        } else {
+            System.out.println("Введено не верное значение");
+            inputTask(scanner);
+        }
+
         inputDdescriptions(scanner);
     }
 
     private static void inputDdescriptions(Scanner scanner) {
         System.out.print("Введите описание задачи: ");
         String descriptionsName = scanner.next();
-        dailyPlanner.notesContain.get(notes.getId()).setDescription(descriptionsName);
+        if (descriptionsName != null || !descriptionsName.isBlank() || !descriptionsName.isEmpty()) {
+            dailyPlanner.notesContain.get(notes.getId()).setDescription(descriptionsName);
+        } else {
+            System.out.println("Введено не верное значение");
+            inputDdescriptions(scanner);
+        }
         inputType(scanner);
     }
 
@@ -57,10 +68,16 @@ public class Main {
                 2 - деловая
                 """);
         String tupeName = scanner.next();
-        if (tupeName.equals("1")) {
-            dailyPlanner.notesContain.get(notes.getId()).setTaskType(true);
+        int t = Integer.parseInt(tupeName);
+        if (tupeName != null || !tupeName.isEmpty() || !tupeName.isBlank() || t < 3 ) {
+            if (tupeName.equals("1")) {
+                dailyPlanner.notesContain.get(notes.getId()).setTaskType(true);
+            } else if (tupeName.equals("2")) {
+                dailyPlanner.notesContain.get(notes.getId()).setTaskType(false);
+            }
         } else {
-            dailyPlanner.notesContain.get(notes.getId()).setTaskType(false);
+            System.out.println("Введено не верное значение");
+            inputType(scanner);
         }
         inputRepeatability(scanner);
     }
@@ -75,8 +92,14 @@ public class Main {
          5 - ежегодно
                 """);
         String repeatabilityName = scanner.next();
-        int repeatabilityNames = Integer.parseInt(repeatabilityName);
-        dailyPlanner.notesContain.get(notes.getId()).setTupeRepeatability(repeatabilityNames);
+        if (repeatabilityName != null || !repeatabilityName.isBlank() || !repeatabilityName.isEmpty()) {
+            int repeatabilityNames = Integer.parseInt(repeatabilityName);
+            dailyPlanner.notesContain.get(notes.getId()).setTupeRepeatability(repeatabilityNames);
+        } else {
+            System.out.println("Введено не верное значение");
+            inputRepeatability(scanner);
+        }
+
     }
 
     private static void deleteType(Scanner scanner) {
@@ -98,7 +121,13 @@ public class Main {
     private static void getTasDay(Scanner scanner) {
         System.out.println("Укажите дату для получения заметки в формате гггг-мм-дд");
         String tasDayName = scanner.next();
-        dailyPlanner.notesContain.get(notes.nextNNote(tasDayName, dailyPlanner, keysContains));
+        if (tasDayName != null || tasDayName.length() > 10 || !tasDayName.isEmpty() || !tasDayName.isBlank()) {
+            dailyPlanner.notesContain.get(notes.nextNNote(tasDayName, dailyPlanner, keysContains));
+        } else {
+            System.out.println("Введено не верное значение");
+            getTasDay(scanner);
+        }
+
     }
 
     private static void printMenu() {
