@@ -62,16 +62,7 @@ public class Main {
         } else {
             dailyPlanner.notesContain.get(notes.getId()).setTaskType(false);
         }
-        choiceRepeatability(scanner);
-    }
-
-    private static void choiceRepeatability(Scanner scanner) {
-        System.out.println("Хотите указать повторяемость ?" + "\n"
-        + "1 - да" + "\n" + "2 - нет");
-        String repeatabilityName = scanner.next();
-        if (repeatabilityName.equals("1")) {
-            inputRepeatability(scanner);
-        }
+        inputRepeatability(scanner);
     }
 
     private static void inputRepeatability(Scanner scanner) {
