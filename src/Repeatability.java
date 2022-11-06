@@ -1,5 +1,7 @@
+import java.util.ArrayList;
+
 public interface Repeatability {
 
-    void nextNNote(String string, Integer id);
+    Object nextNNote(String date, DailyPlanner dailyPlanner, ArrayList<Integer> keysContains);
 
 }

@@ -41,8 +41,6 @@ public class Main {
         dailyPlanner.setNotesContain(notes.getId(), notes);
         keysContains.add(notes.getId());
         inputDdescriptions(scanner);
-
-        // todo
     }
 
     private static void inputDdescriptions(Scanner scanner) {
@@ -86,29 +84,30 @@ public class Main {
          5 - ежегодно
                 """);
         String repeatabilityName = scanner.next();
-        dailyPlanner.notesContain.get(notes.getId()).nextNNote(repeatabilityName, notes.getId());
+        int repeatabilityNames = Integer.parseInt(repeatabilityName);
+        dailyPlanner.notesContain.get(notes.getId()).setTupeRepeatability(repeatabilityNames);
     }
 
     private static void deleteType(Scanner scanner) {
-        int t = 1;
         System.out.print("Выберите задачу для удаления :");
         for (int i = 0; i < dailyPlanner.notesContain.size(); i++) {
             System.out.println("Заголовок - " + dailyPlanner.notesContain.get(keysContains.get(i)).getHeading() +
-                   " - " + t);
-            t++;
+                   " - " + i);
         }
         String deleteName = scanner.next();
         int deleteNames = Integer.parseInt(deleteName);
-        dailyPlanner.notesContain.remove(keysContains.get(deleteNames));
+        if (deleteNames > dailyPlanner.notesContain.size()-1) {
+            System.out.println("такой заметки нет");
+        } else {
+            dailyPlanner.notesContain.remove(keysContains.get(deleteNames));
+            System.out.println("Заметка удалена");
+        }
     }
 
     private static void getTasDay(Scanner scanner) {
-        System.out.println("Укажите дату для получения заметки");
-        System.out.println(dailyPlanner.notesContain.get(notes.getDate()));
-        dailyPlanner.notesContain.get(notes.getDate());
+        System.out.println("Укажите дату для получения заметки в формате гггг-мм-дд");
         String tasDayName = scanner.next();
-        System.out.println(tasDayName);
-
+        dailyPlanner.notesContain.get(notes.nextNNote(tasDayName, dailyPlanner, keysContains));
     }
 
     private static void printMenu() {
