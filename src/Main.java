@@ -16,7 +16,7 @@ public class Main {
                             inputTask(scanner);
                             break;
                         case 2:
-                            deleteType(scanner);
+                            deleteTask(scanner);
                             break;
                         case 3:
                             getTasDay(scanner);
@@ -32,101 +32,27 @@ public class Main {
         }
     }
     static DailyPlanner dailyPlanner = new DailyPlanner();
-    static ArrayList<Integer> keysContains = new ArrayList<>();
-    static Notes notes = new Notes();
+
     private static void inputTask(Scanner scanner) {
         System.out.print("Введите название задачи: ");
         String taskName = scanner.next();
-        if (taskName != null || !taskName.isEmpty() || !taskName.isBlank()) {
-            notes.setHeading(taskName);
-            dailyPlanner.setNotesContain(notes.getId(), notes);
-            keysContains.add(notes.getId());
-        } else {
-            System.out.println("Введено не верное значение");
-            inputTask(scanner);
-        }
-
-        inputDdescriptions(scanner);
+        dailyPlanner.addTask(scanner, dailyPlanner);
     }
 
-    private static void inputDdescriptions(Scanner scanner) {
-        System.out.print("Введите описание задачи: ");
-        String descriptionsName = scanner.next();
-        if (descriptionsName != null || !descriptionsName.isBlank() || !descriptionsName.isEmpty()) {
-            dailyPlanner.notesContain.get(notes.getId()).setDescription(descriptionsName);
-        } else {
-            System.out.println("Введено не верное значение");
-            inputDdescriptions(scanner);
-        }
-        inputType(scanner);
-    }
-
-    private static void inputType(Scanner scanner) {
-        System.out.print("""
-                Выберите тип задачи
-                1 - личная
-                2 - деловая
-                """);
-        String tupeName = scanner.next();
-        int t = Integer.parseInt(tupeName);
-        if (tupeName != null || !tupeName.isEmpty() || !tupeName.isBlank() || t < 3 ) {
-            if (tupeName.equals("1")) {
-                dailyPlanner.notesContain.get(notes.getId()).setTaskType(true);
-            } else if (tupeName.equals("2")) {
-                dailyPlanner.notesContain.get(notes.getId()).setTaskType(false);
-            }
-        } else {
-            System.out.println("Введено не верное значение");
-            inputType(scanner);
-        }
-        inputRepeatability(scanner);
-    }
-
-    private static void inputRepeatability(Scanner scanner) {
-        System.out.print("""
-         С какой переодичностью  вы хотите получать напоминание?
-         1 - однократно
-         2 - ежедневно
-         3 - еженедельно
-         4 - ежемесячно
-         5 - ежегодно
-                """);
-        String repeatabilityName = scanner.next();
-        if (repeatabilityName != null || !repeatabilityName.isBlank() || !repeatabilityName.isEmpty()) {
-            int repeatabilityNames = Integer.parseInt(repeatabilityName);
-            dailyPlanner.notesContain.get(notes.getId()).setTupeRepeatability(repeatabilityNames);
-        } else {
-            System.out.println("Введено не верное значение");
-            inputRepeatability(scanner);
-        }
-
-    }
-
-    private static void deleteType(Scanner scanner) {
+    private static void deleteTask(Scanner scanner) {
         System.out.print("Выберите задачу для удаления :");
-        for (int i = 0; i < dailyPlanner.notesContain.size(); i++) {
-            System.out.println("Заголовок - " + dailyPlanner.notesContain.get(keysContains.get(i)).getHeading() +
-                   " - " + i);
-        }
+        dailyPlanner.printNotes(dailyPlanner);
         String deleteName = scanner.next();
         int deleteNames = Integer.parseInt(deleteName);
-        if (deleteNames > dailyPlanner.notesContain.size()-1) {
-            System.out.println("такой заметки нет");
-        } else {
-            dailyPlanner.notesContain.remove(keysContains.get(deleteNames));
-            System.out.println("Заметка удалена");
-        }
+        dailyPlanner.delete(deleteNames, dailyPlanner);
+
     }
 
     private static void getTasDay(Scanner scanner) {
         System.out.println("Укажите дату для получения заметки в формате гггг-мм-дд");
         String tasDayName = scanner.next();
-        if (tasDayName != null || tasDayName.length() > 10 || !tasDayName.isEmpty() || !tasDayName.isBlank()) {
-            dailyPlanner.notesContain.get(notes.nextNNote(tasDayName, dailyPlanner, keysContains));
-        } else {
-            System.out.println("Введено не верное значение");
-            getTasDay(scanner);
-        }
+        dailyPlanner.getDay(tasDayName, dailyPlanner);
+
 
     }
 
