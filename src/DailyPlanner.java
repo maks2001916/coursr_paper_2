@@ -8,38 +8,35 @@ public class DailyPlanner {
 
     static ArrayList<Integer> keysContains = new ArrayList<>();
     static Note note = new Note();
-    public void addTask(Scanner scanner, DailyPlanner dailyPlanner) {
-        String taskName = scanner.next();
+    public void addTask(String taskName, DailyPlanner dailyPlanner) {
         if (taskName != null || !taskName.isEmpty() || !taskName.isBlank()) {
             note.setHeading(taskName);
             dailyPlanner.setNotesContain(note.getId(), note);
             keysContains.add(note.getId());
         } else {
             System.out.println("Введено не верное значение");
-            addTask(scanner, dailyPlanner);
+            addTask(taskName, dailyPlanner);
         }
-        inputDescriptions(scanner, dailyPlanner);
+        inputDescriptions(taskName, dailyPlanner);
     }
 
-    private static void inputDescriptions(Scanner scanner, DailyPlanner dailyPlanner) {
+    private static void inputDescriptions(String descriptionsName, DailyPlanner dailyPlanner) {
         System.out.print("Введите описание задачи: ");
-        String descriptionsName = scanner.next();
         if (descriptionsName != null || !descriptionsName.isBlank() || !descriptionsName.isEmpty()) {
             dailyPlanner.notesContain.get(note.getId()).setDescription(descriptionsName);
         } else {
             System.out.println("Введено не верное значение");
-            inputDescriptions(scanner, dailyPlanner);
+            inputDescriptions(descriptionsName, dailyPlanner);
         }
-        inputType(scanner, dailyPlanner);
+        inputType(descriptionsName, dailyPlanner);
     }
 
-    private static void inputType(Scanner scanner, DailyPlanner dailyPlanner) {
+    private static void inputType(String tupeName, DailyPlanner dailyPlanner) {
         System.out.print("""
                 Выберите тип задачи
                 1 - личная
                 2 - деловая
                 """);
-        String tupeName = scanner.next();
         int t = Integer.parseInt(tupeName);
         if (tupeName != null || !tupeName.isEmpty() || !tupeName.isBlank() || t < 3 ) {
             if (tupeName.equals("1")) {
@@ -49,12 +46,12 @@ public class DailyPlanner {
             }
         } else {
             System.out.println("Введено не верное значение");
-            inputType(scanner, dailyPlanner);
+            inputType(tupeName, dailyPlanner);
         }
-        inputRepeatability(scanner, dailyPlanner);
+        inputRepeatability(tupeName, dailyPlanner);
     }
 
-    private static void inputRepeatability(Scanner scanner, DailyPlanner dailyPlanner) {
+    private static void inputRepeatability(String repeatabilityName, DailyPlanner dailyPlanner) {
         System.out.print("""
          С какой переодичностью  вы хотите получать напоминание?
          1 - однократно
@@ -63,15 +60,13 @@ public class DailyPlanner {
          4 - ежемесячно
          5 - ежегодно
                 """);
-        String repeatabilityName = scanner.next();
         if (repeatabilityName != null || !repeatabilityName.isBlank() || !repeatabilityName.isEmpty()) {
             int repeatabilityNames = Integer.parseInt(repeatabilityName);
             dailyPlanner.notesContain.get(note.getId()).setTupeRepeatability(repeatabilityNames);
         } else {
             System.out.println("Введено не верное значение");
-            inputRepeatability(scanner, dailyPlanner);
+            inputRepeatability(repeatabilityName, dailyPlanner);
         }
-
     }
 
     public void printNotes(DailyPlanner dailyPlanner) {

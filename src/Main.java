@@ -36,7 +36,7 @@ public class Main {
     private static void inputTask(Scanner scanner) {
         System.out.print("Введите название задачи: ");
         String taskName = scanner.next();
-        dailyPlanner.addTask(scanner, dailyPlanner);
+        dailyPlanner.addTask(taskName, dailyPlanner);
     }
 
     private static void deleteTask(Scanner scanner) {
