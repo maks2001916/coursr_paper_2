@@ -71,19 +71,50 @@ public class Note implements Repeatability {
         for (int i = 0; i < dailyPlanner.notesContain.size(); i++) {
             switch (dailyPlanner.notesContain.get(keisKontains.get(i)).getTupeRepeatability()) {
                 case 1:
-                    repeatStatusOne(date, dailyPlanner, keisKontains);
+                    String dates = Integer.toString(dailyPlanner.notesContain.get(keisKontains.get(i)).taskDateTime.getDayOfMonth());
+                    if (date.equals(dates)) {
+                        System.out.println(dailyPlanner.notesContain.get(keisKontains.get(i)).toString());
+                    }
                     break;
                 case 2:
-                    repeatStatusDaily(dailyPlanner,keisKontains);
+                    int dateVariableOneDaily = date.charAt(dailyPlanner.notesContain.size()-1) +
+                            date.charAt(dailyPlanner.notesContain.size());
+                    int dateVariableTwoDaily = date.charAt(dailyPlanner.notesContain.size()-1) +
+                            date.charAt(dailyPlanner.notesContain.size());
+                    if (dateVariableTwoDaily >= dateVariableOneDaily ) {
+                        System.out.println(dailyPlanner.notesContain.get(keisKontains.get(i)).toString());
+                    }
                     break;
                 case 3:
-                    repeatStatusWeekly(date, dailyPlanner, keisKontains);
+                    int dateVariableOne = date.charAt(dailyPlanner.notesContain.size()-1) +
+                            date.charAt(dailyPlanner.notesContain.size());
+                    if ((dailyPlanner.notesContain.get(keisKontains.get(i)).taskDateTime.getDayOfYear() - dateVariableOne) % 7 == 0 ) {
+                        System.out.println(dailyPlanner.notesContain.get(keisKontains.get(i)).toString());
+                    }
                     break;
                 case 4:
-                    repeatStatusMonthly(date, dailyPlanner, keisKontains);
+                    int dateVariableDate = date.charAt(dailyPlanner.notesContain.size()-1) +
+                            date.charAt(dailyPlanner.notesContain.size());
+                    int dateVariableMonth = date.charAt(dailyPlanner.notesContain.size()-4) +
+                            date.charAt(dailyPlanner.notesContain.size()-3) + dateVariableDate;
+                    String dateVariablesDate = String.valueOf(dateVariableDate);
+                    String dataVariableTwoDate = String.valueOf(dailyPlanner.notesContain.get(keisKontains.get(i)).taskDateTime.getDayOfMonth());
+                    if (dataVariableTwoDate.equals(dateVariablesDate) || dateVariableMonth == dailyPlanner.
+                            notesContain.get(keisKontains.get(i)).taskDateTime.getMonthValue()) {
+                        System.out.println(dailyPlanner.notesContain.get(keisKontains.get(i)).toString());
+                    }
                     break;
                 case 5:
-                    repeatStatusAnnually(date, dailyPlanner, keisKontains);
+                    int dateVariableAnnually = date.charAt(dailyPlanner.notesContain.size()-4) +
+                            date.charAt(dailyPlanner.notesContain.size()-3);
+                    int dateVariablesAnnually = date.charAt(dailyPlanner.notesContain.size() - 1) +
+                            date.charAt(dailyPlanner.notesContain.size());
+                    String dateIntermediate = String.valueOf(dateVariableAnnually) + '-' + String.valueOf(dateVariablesAnnually);
+                    String dataVariableTwoAnnually = String.valueOf(dailyPlanner.notesContain.get(keisKontains.get(i)).taskDateTime.getMonthValue()) +
+                            '-' + String.valueOf(dailyPlanner.notesContain.get(keisKontains.get(i)).taskDateTime.getDayOfMonth());
+                    if (dateIntermediate.equals(dataVariableTwoAnnually) ) {
+                        System.out.println(dailyPlanner.notesContain.get(keisKontains.get(i)).toString());
+                    }
                     break;
             }
         }
@@ -91,65 +122,14 @@ public class Note implements Repeatability {
         return null;
     }
 
-    public static void repeatStatusOne(String date, DailyPlanner dailyPlanner, ArrayList<Integer> keisKontains) {
-        for (int i = 0; i < dailyPlanner.notesContain.size(); i++) {
-            String dates = Integer.toString(dailyPlanner.notesContain.get(keisKontains.get(i)).taskDateTime.getDayOfMonth());
-            if (date.equals(dates)) {
-                System.out.println(dailyPlanner.notesContain.get(keisKontains.get(i)).toString());
-            }
-        }
-
-    }
-
-    public static void repeatStatusDaily(DailyPlanner dailyPlanner, ArrayList<Integer> keisKontains) {
-        for (int i = 0; i < dailyPlanner.notesContain.size(); i++) {
-            System.out.println(dailyPlanner.notesContain.get(keisKontains.get(i)).toString());
-        }
-    }
-
-    public static void repeatStatusWeekly(String date, DailyPlanner dailyPlanner, ArrayList<Integer> keisKontains) {
-        for (int i = 0; i < dailyPlanner.notesContain.size(); i++) {
-            int dateVariable = date.charAt(dailyPlanner.notesContain.size()-1) +
-                    date.charAt(dailyPlanner.notesContain.size());
-            if ((dailyPlanner.notesContain.get(keisKontains.get(i)).taskDateTime.getDayOfYear() - dateVariable) % 7 == 0 ) {
-                System.out.println(dailyPlanner.notesContain.get(keisKontains.get(i)).toString());
-            }
-        }
-    }
-
-    public static void repeatStatusMonthly(String date, DailyPlanner dailyPlanner, ArrayList<Integer> keisKontains) {
-        for (int i = 0; i < dailyPlanner.notesContain.size(); i++) {
-            int dateVariable = date.charAt(dailyPlanner.notesContain.size()-1) +
-                    date.charAt(dailyPlanner.notesContain.size());
-            String dateVariables = String.valueOf(dateVariable);
-            String dataVariableTwo = String.valueOf(dailyPlanner.notesContain.get(keisKontains.get(i)).taskDateTime.getDayOfMonth());
-            if (dataVariableTwo.equals(dateVariables)) {
-                System.out.println(dailyPlanner.notesContain.get(keisKontains.get(i)).toString());
-            }
-        }
-    }
-
-    public static void repeatStatusAnnually(String date, DailyPlanner dailyPlanner, ArrayList<Integer> keisKontains) {
-        for (int i = 0; i < dailyPlanner.notesContain.size(); i++) {
-            int dateVariable = date.charAt(dailyPlanner.notesContain.size()-4) +
-                    date.charAt(dailyPlanner.notesContain.size()-3);
-            int dateVariables = date.charAt(dailyPlanner.notesContain.size() - 1) +
-                    date.charAt(dailyPlanner.notesContain.size());
-            String dateIntermediate = String.valueOf(dateVariable) + '-' + String.valueOf(dateVariables);
-            String dataVariableTwo = String.valueOf(dailyPlanner.notesContain.get(keisKontains.get(i)).taskDateTime.getMonthValue()) +
-                    '-' + String.valueOf(dailyPlanner.notesContain.get(keisKontains.get(i)).taskDateTime.getDayOfMonth());
-            if (dateIntermediate.equals(dataVariableTwo) ) {
-                System.out.println(dailyPlanner.notesContain.get(keisKontains.get(i)).toString());
-            }
-        }
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Note notes = (Note) o;
-        return taskType == notes.taskType && id == notes.id && tupeRepeatability == notes.tupeRepeatability && Objects.equals(heading, notes.heading) && Objects.equals(description, notes.description) && Objects.equals(random, notes.random);
+        return taskType == notes.taskType && id == notes.id && tupeRepeatability == notes.tupeRepeatability &&
+                Objects.equals(heading, notes.heading) && Objects.equals(description, notes.description) &&
+                Objects.equals(random, notes.random);
     }
 
     @Override
