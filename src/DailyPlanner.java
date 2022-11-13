@@ -8,30 +8,30 @@ public class DailyPlanner {
 
     static ArrayList<Integer> keysContains = new ArrayList<>();
     static Note note = new Note();
-    public void addTask(String taskName, DailyPlanner dailyPlanner) {
+    public void addTask(String taskName) {
         if (taskName != null || !taskName.isEmpty() || !taskName.isBlank()) {
             note.setHeading(taskName);
-            dailyPlanner.setNotesContain(note.getId(), note);
+            this.setNotesContain(note.getId(), note);
             keysContains.add(note.getId());
         } else {
             System.out.println("Введено не верное значение");
-            addTask(taskName, dailyPlanner);
+            addTask(taskName);
         }
-        inputDescriptions(taskName, dailyPlanner);
+        inputDescriptions(taskName);
     }
 
-    private static void inputDescriptions(String descriptionsName, DailyPlanner dailyPlanner) {
+    private void inputDescriptions(String descriptionsName) {
         System.out.print("Введите описание задачи: ");
         if (descriptionsName != null || !descriptionsName.isBlank() || !descriptionsName.isEmpty()) {
-            dailyPlanner.notesContain.get(note.getId()).setDescription(descriptionsName);
+            this.notesContain.get(note.getId()).setDescription(descriptionsName);
         } else {
             System.out.println("Введено не верное значение");
-            inputDescriptions(descriptionsName, dailyPlanner);
+            inputDescriptions(descriptionsName);
         }
-        inputType(descriptionsName, dailyPlanner);
+        inputType(descriptionsName);
     }
 
-    private static void inputType(String tupeName, DailyPlanner dailyPlanner) {
+    private void inputType(String tupeName) {
         System.out.print("""
                 Выберите тип задачи
                 1 - личная
@@ -40,18 +40,18 @@ public class DailyPlanner {
         int t = Integer.parseInt(tupeName);
         if (tupeName != null || !tupeName.isEmpty() || !tupeName.isBlank() || t < 3 ) {
             if (tupeName.equals("1")) {
-                dailyPlanner.notesContain.get(note.getId()).setTaskType(true);
+                this.notesContain.get(note.getId()).setTaskType(true);
             } else if (tupeName.equals("2")) {
-                dailyPlanner.notesContain.get(note.getId()).setTaskType(false);
+                this.notesContain.get(note.getId()).setTaskType(false);
             }
         } else {
             System.out.println("Введено не верное значение");
-            inputType(tupeName, dailyPlanner);
+            inputType(tupeName);
         }
-        inputRepeatability(tupeName, dailyPlanner);
+        inputRepeatability(tupeName);
     }
 
-    private static void inputRepeatability(String repeatabilityName, DailyPlanner dailyPlanner) {
+    private void inputRepeatability(String repeatabilityName) {
         System.out.print("""
          С какой переодичностью  вы хотите получать напоминание?
          1 - однократно
@@ -62,35 +62,35 @@ public class DailyPlanner {
                 """);
         if (repeatabilityName != null || !repeatabilityName.isBlank() || !repeatabilityName.isEmpty()) {
             int repeatabilityNames = Integer.parseInt(repeatabilityName);
-            dailyPlanner.notesContain.get(note.getId()).setTupeRepeatability(repeatabilityNames);
+            this.notesContain.get(note.getId()).setTupeRepeatability(repeatabilityNames);
         } else {
             System.out.println("Введено не верное значение");
-            inputRepeatability(repeatabilityName, dailyPlanner);
+            inputRepeatability(repeatabilityName);
         }
     }
 
-    public void printNotes(DailyPlanner dailyPlanner) {
-        for (int i = 0; i < dailyPlanner.notesContain.size(); i++) {
-            System.out.println("Заголовок - " + dailyPlanner.notesContain.get(keysContains.get(i)).getHeading() +
+    public void printNotes() {
+        for (int i = 0; i < this.notesContain.size(); i++) {
+            System.out.println("Заголовок - " + this.notesContain.get(keysContains.get(i)).getHeading() +
                     " - " + i);
         }
     }
 
-    public void delete(int deleteNames, DailyPlanner dailyPlanner) {
-        if (deleteNames > dailyPlanner.notesContain.size()-1) {
+    public void delete(int deleteNames) {
+        if (deleteNames > this.notesContain.size()-1) {
             System.out.println("такой заметки нет");
         } else {
-            dailyPlanner.notesContain.remove(keysContains.get(deleteNames));
+            this.notesContain.remove(keysContains.get(deleteNames));
             System.out.println("Заметка удалена");
         }
     }
 
-    public void getDay(String tasDayName, DailyPlanner dailyPlanner) {
+    public void getDay(String tasDayName) {
         if (tasDayName != null || tasDayName.length() > 10 || !tasDayName.isEmpty() || !tasDayName.isBlank()) {
-            dailyPlanner.notesContain.get(note.nextNNote(tasDayName, dailyPlanner, keysContains));
+            this.notesContain.get(note.nextNNote(tasDayName, this, keysContains));
         } else {
             System.out.println("Введено не верное значение");
-            getDay(tasDayName, dailyPlanner);
+            getDay(tasDayName);
         }
     }
 

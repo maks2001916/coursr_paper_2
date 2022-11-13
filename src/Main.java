@@ -36,22 +36,22 @@ public class Main {
     private static void inputTask(Scanner scanner) {
         System.out.print("Введите название задачи: ");
         String taskName = scanner.next();
-        dailyPlanner.addTask(taskName, dailyPlanner);
+        dailyPlanner.addTask(taskName);
     }
 
     private static void deleteTask(Scanner scanner) {
         System.out.print("Выберите задачу для удаления :");
-        dailyPlanner.printNotes(dailyPlanner);
+        dailyPlanner.printNotes();
         String deleteName = scanner.next();
         int deleteNames = Integer.parseInt(deleteName);
-        dailyPlanner.delete(deleteNames, dailyPlanner);
+        dailyPlanner.delete(deleteNames);
 
     }
 
     private static void getTasDay(Scanner scanner) {
         System.out.println("Укажите дату для получения заметки в формате гггг-мм-дд");
         String tasDayName = scanner.next();
-        dailyPlanner.getDay(tasDayName, dailyPlanner);
+        dailyPlanner.getDay(tasDayName);
 
 
     }
