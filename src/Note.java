@@ -5,7 +5,7 @@ import java.util.Objects;
 import java.util.Random;
 import java.util.Scanner;
 
-public class Note implements Repeatability {
+public class Note {
     private String heading;
     private String description;
     private boolean taskType;
@@ -66,61 +66,7 @@ public class Note implements Repeatability {
         keysContains.add(notes.getId());
     }
 
-    @Override
-    public Object nextNNote(String date, DailyPlanner dailyPlanner, ArrayList<Integer> keisKontains) {
-        for (int i = 0; i < dailyPlanner.notesContain.size(); i++) {
-            switch (dailyPlanner.notesContain.get(keisKontains.get(i)).getTupeRepeatability()) {
-                case 1:
-                    String dates = Integer.toString(dailyPlanner.notesContain.get(keisKontains.get(i)).taskDateTime.getDayOfMonth());
-                    if (date.equals(dates)) {
-                        System.out.println(dailyPlanner.notesContain.get(keisKontains.get(i)).toString());
-                    }
-                    break;
-                case 2:
-                    int dateVariableOneDaily = date.charAt(dailyPlanner.notesContain.size()-1) +
-                            date.charAt(dailyPlanner.notesContain.size());
-                    int dateVariableTwoDaily = date.charAt(dailyPlanner.notesContain.size()-1) +
-                            date.charAt(dailyPlanner.notesContain.size());
-                    if (dateVariableTwoDaily >= dateVariableOneDaily ) {
-                        System.out.println(dailyPlanner.notesContain.get(keisKontains.get(i)).toString());
-                    }
-                    break;
-                case 3:
-                    int dateVariableOne = date.charAt(dailyPlanner.notesContain.size()-1) +
-                            date.charAt(dailyPlanner.notesContain.size());
-                    if ((dailyPlanner.notesContain.get(keisKontains.get(i)).taskDateTime.getDayOfYear() - dateVariableOne) % 7 == 0 ) {
-                        System.out.println(dailyPlanner.notesContain.get(keisKontains.get(i)).toString());
-                    }
-                    break;
-                case 4:
-                    int dateVariableDate = date.charAt(dailyPlanner.notesContain.size()-1) +
-                            date.charAt(dailyPlanner.notesContain.size());
-                    int dateVariableMonth = date.charAt(dailyPlanner.notesContain.size()-4) +
-                            date.charAt(dailyPlanner.notesContain.size()-3) + dateVariableDate;
-                    String dateVariablesDate = String.valueOf(dateVariableDate);
-                    String dataVariableTwoDate = String.valueOf(dailyPlanner.notesContain.get(keisKontains.get(i)).taskDateTime.getDayOfMonth());
-                    if (dataVariableTwoDate.equals(dateVariablesDate) || dateVariableMonth == dailyPlanner.
-                            notesContain.get(keisKontains.get(i)).taskDateTime.getMonthValue()) {
-                        System.out.println(dailyPlanner.notesContain.get(keisKontains.get(i)).toString());
-                    }
-                    break;
-                case 5:
-                    int dateVariableAnnually = date.charAt(dailyPlanner.notesContain.size()-4) +
-                            date.charAt(dailyPlanner.notesContain.size()-3);
-                    int dateVariablesAnnually = date.charAt(dailyPlanner.notesContain.size() - 1) +
-                            date.charAt(dailyPlanner.notesContain.size());
-                    String dateIntermediate = String.valueOf(dateVariableAnnually) + '-' + String.valueOf(dateVariablesAnnually);
-                    String dataVariableTwoAnnually = String.valueOf(dailyPlanner.notesContain.get(keisKontains.get(i)).taskDateTime.getMonthValue()) +
-                            '-' + String.valueOf(dailyPlanner.notesContain.get(keisKontains.get(i)).taskDateTime.getDayOfMonth());
-                    if (dateIntermediate.equals(dataVariableTwoAnnually) ) {
-                        System.out.println(dailyPlanner.notesContain.get(keisKontains.get(i)).toString());
-                    }
-                    break;
-            }
-        }
 
-        return null;
-    }
 
     @Override
     public boolean equals(Object o) {

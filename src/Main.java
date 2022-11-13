@@ -1,3 +1,4 @@
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Objects;
 import java.util.Scanner;
@@ -43,15 +44,17 @@ public class Main {
         System.out.print("Выберите задачу для удаления :");
         dailyPlanner.printNotes();
         String deleteName = scanner.next();
+        LocalDate receivedDate = LocalDate.parse(deleteName);
         int deleteNames = Integer.parseInt(deleteName);
-        dailyPlanner.delete(deleteNames);
+        dailyPlanner.delete(receivedDate);
 
     }
 
     private static void getTasDay(Scanner scanner) {
         System.out.println("Укажите дату для получения заметки в формате гггг-мм-дд");
         String tasDayName = scanner.next();
-        dailyPlanner.getDay(tasDayName);
+        LocalDate receivedDate = LocalDate.parse(tasDayName);
+        dailyPlanner.getDay(receivedDate);
 
 
     }
