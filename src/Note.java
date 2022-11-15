@@ -59,8 +59,12 @@ public class Note {
         this.description = description;
     }
 
-    public void inputTasks(Scanner scanner,Note notes, DailyPlanner dailyPlanner,
-                                  ArrayList<Integer> keysContains) {
+    public LocalDateTime getTaskDateTime() {
+        return taskDateTime;
+    }
+
+    public void inputTasks(Scanner scanner, Note notes, DailyPlanner dailyPlanner,
+                           ArrayList<Integer> keysContains) {
         System.out.print("Введите название задачи: ");
         dailyPlanner.setNotesContain(notes.getId(), notes);
         keysContains.add(notes.getId());

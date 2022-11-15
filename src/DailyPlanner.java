@@ -18,26 +18,19 @@ public class DailyPlanner implements Repeatability {
             System.out.println("Введено не верное значение");
             addTask(taskName);
         }
-        inputDescriptions(taskName);
     }
 
-    private void inputDescriptions(String descriptionsName) {
-        System.out.print("Введите описание задачи: ");
+    public void inputDescriptionsLogic(String descriptionsName) {
+
         if (descriptionsName != null || !descriptionsName.isBlank() || !descriptionsName.isEmpty()) {
             this.notesContain.get(note.getId()).setDescription(descriptionsName);
         } else {
             System.out.println("Введено не верное значение");
-            inputDescriptions(descriptionsName);
+            inputDescriptionsLogic(descriptionsName);
         }
-        inputType(descriptionsName);
     }
 
-    private void inputType(String tupeName) {
-        System.out.print("""
-                Выберите тип задачи
-                1 - личная
-                2 - деловая
-                """);
+    public void inputTypeLogic(String tupeName) {
         int t = Integer.parseInt(tupeName);
         if (tupeName != null || !tupeName.isEmpty() || !tupeName.isBlank() || t < 3 ) {
             if (tupeName.equals("1")) {
@@ -47,26 +40,17 @@ public class DailyPlanner implements Repeatability {
             }
         } else {
             System.out.println("Введено не верное значение");
-            inputType(tupeName);
+            inputTypeLogic(tupeName);
         }
-        inputRepeatability(tupeName);
     }
 
-    private void inputRepeatability(String repeatabilityName) {
-        System.out.print("""
-         С какой переодичностью  вы хотите получать напоминание?
-         1 - однократно
-         2 - ежедневно
-         3 - еженедельно
-         4 - ежемесячно
-         5 - ежегодно
-                """);
+    public void inputRepeatabilityLogic(String repeatabilityName) {
         if (repeatabilityName != null || !repeatabilityName.isBlank() || !repeatabilityName.isEmpty()) {
             int repeatabilityNames = Integer.parseInt(repeatabilityName);
             this.notesContain.get(note.getId()).setTupeRepeatability(repeatabilityNames);
         } else {
             System.out.println("Введено не верное значение");
-            inputRepeatability(repeatabilityName);
+            inputRepeatabilityLogic(repeatabilityName);
         }
     }
 
@@ -77,11 +61,11 @@ public class DailyPlanner implements Repeatability {
         }
     }
 
-    public void delete(LocalDate deleteNames) {
-        if (deleteNames.getDayOfMonth() > this.notesContain.size()-1) {
+    public void delete(int deleteNames) {
+        if (deleteNames > this.notesContain.size()-1) {
             System.out.println("такой заметки нет");
         } else {
-            this.notesContain.remove(keysContains.get(deleteNames.getDayOfMonth()));
+            this.notesContain.remove(keysContains.get(keysContains.get(deleteNames)));
             System.out.println("Заметка удалена");
         }
     }
@@ -99,29 +83,34 @@ public class DailyPlanner implements Repeatability {
         for (Note note: this.notesContain.values()) {
             switch (note.getTupeRepeatability()) {
                 case 1:
-                    if (note.taskDateTime.getDayOfMonth() == date.getDayOfMonth()) {
+                    if (note.getTaskDateTime().toLocalDate().equals(date)) {
                         System.out.println(note);
                     }
                     break;
                 case 2:
-                    if (date.getDayOfMonth() >= note.taskDateTime.getDayOfMonth()) {
+                    if (note.getTaskDateTime().toLocalDate().equals(date) ||
+                            note.getTaskDateTime().toLocalDate().isBefore(date)) {
                         System.out.println(note);
                     }
                     break;
                 case 3:
-                    if ((note.taskDateTime.getDayOfMonth() - date.getDayOfMonth()) % 7 == 0 ) {
+                    if (note.getTaskDateTime().toLocalDate().equals(date) ||
+                            (note.getTaskDateTime().toLocalDate().isBefore(date) &&
+                            note.getTaskDateTime().getDayOfWeek().equals(date.getDayOfWeek()))) {
                         System.out.println(note);
                     }
                     break;
                 case 4:
-                    if (date.getDayOfMonth() == note.taskDateTime.getDayOfMonth() ||
-                            date.getDayOfMonth() == note.taskDateTime.getDayOfMonth() &&
-                                    date.getMonthValue() == note.taskDateTime.getMonthValue()) {
+                    if (note.getTaskDateTime().toLocalDate().equals(date) ||
+                            (note.getTaskDateTime().toLocalDate().isBefore(date) &&
+                                    note.getTaskDateTime().getDayOfMonth() == date.getDayOfMonth())) {
                         System.out.println(note);
                     }
                     break;
                 case 5:
-                    if (date.getDayOfMonth() + date.getMonthValue() == note.taskDateTime.getDayOfMonth() + note.taskDateTime.getMonthValue()) {
+                    if (note.getTaskDateTime().toLocalDate().equals(date) ||
+                            (note.getTaskDateTime().toLocalDate().isBefore(date) &&
+                                    note.getTaskDateTime().getDayOfYear() == date.getDayOfYear())) {
                         System.out.println(note);
                     }
                     break;

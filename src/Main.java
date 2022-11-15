@@ -38,15 +38,46 @@ public class Main {
         System.out.print("Введите название задачи: ");
         String taskName = scanner.next();
         dailyPlanner.addTask(taskName);
+        inputDescriptions(scanner);
+    }
+
+    private static void inputDescriptions(Scanner scanner) {
+        System.out.print("Введите описание задачи: ");
+        String descriptionsName = scanner.next();
+        dailyPlanner.inputDescriptionsLogic(descriptionsName);
+        inputType(scanner);
+    }
+
+    private static void inputType(Scanner scanner) {
+        System.out.print("""
+                Выберите тип задачи
+                1 - личная
+                2 - деловая
+                """);
+        String inputTypeName = scanner.next();
+        dailyPlanner.inputTypeLogic(inputTypeName);
+        inputRepeatability(scanner);
+    }
+
+    private static void inputRepeatability(Scanner scanner) {
+        System.out.print("""
+         С какой переодичностью  вы хотите получать напоминание?
+         1 - однократно
+         2 - ежедневно
+         3 - еженедельно
+         4 - ежемесячно
+         5 - ежегодно
+                """);
+        String inputRepeatabilityName = scanner.next();
+        dailyPlanner.inputRepeatabilityLogic(inputRepeatabilityName);
     }
 
     private static void deleteTask(Scanner scanner) {
         System.out.print("Выберите задачу для удаления :");
         dailyPlanner.printNotes();
         String deleteName = scanner.next();
-        LocalDate receivedDate = LocalDate.parse(deleteName);
         int deleteNames = Integer.parseInt(deleteName);
-        dailyPlanner.delete(receivedDate);
+        dailyPlanner.delete(deleteNames);
 
     }
 
