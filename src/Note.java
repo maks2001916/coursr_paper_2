@@ -93,7 +93,7 @@ public class Note {
                 "heading='" + heading + '\'' +
                 ", description='" + description + '\'' +
                 ", taskType=" + taskType +
-                ", date='" + taskDateTime.toString() +
+                ", date='" + taskDateTime +
                 ", id=" + id +
                 ", tupeRepeatability=" + tupeRepeatability +
                 '}';

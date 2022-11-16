@@ -7,13 +7,12 @@ import java.util.Scanner;
 public class DailyPlanner implements Repeatability {
     Map<Integer, Note> notesContain = new HashMap<>();
 
-    static ArrayList<Integer> keysContains = new ArrayList<>();
+
     static Note note = new Note();
     public void addTask(String taskName) {
         if (taskName != null || !taskName.isEmpty() || !taskName.isBlank()) {
             note.setHeading(taskName);
             this.setNotesContain(note.getId(), note);
-            keysContains.add(note.getId());
         } else {
             System.out.println("Введено не верное значение");
             addTask(taskName);
@@ -56,18 +55,13 @@ public class DailyPlanner implements Repeatability {
 
     public void printNotes() {
         for (int i = 0; i < this.notesContain.size(); i++) {
-            System.out.println("Заголовок - " + this.notesContain.get(keysContains.get(i)).getHeading() +
-                    " - " + i);
+            System.out.println("Заголовок - " + this.notesContain.values());
         }
     }
 
     public void delete(int deleteNames) {
-        if (deleteNames > this.notesContain.size()-1) {
-            System.out.println("такой заметки нет");
-        } else {
-            this.notesContain.remove(keysContains.get(keysContains.get(deleteNames)));
+            this.notesContain.remove(deleteNames);
             System.out.println("Заметка удалена");
-        }
     }
 
     public void getDay(LocalDate tasDayName) {
